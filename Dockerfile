@@ -23,7 +23,7 @@ RUN apk add --no-cache --virtual build-dependencies \
         g++ \
         gcc \
         git \
-        libqt5webkit5-dev \
+        qt5-qtwebkit-dev \
         make \
         nodejs \
         npm \
