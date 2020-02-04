@@ -2,9 +2,6 @@ FROM gounthar/docker-alpine-curl:latest
 # Sneak the stf executable into $PATH.
 ENV PATH /app/bin:$PATH
 
-# Work in app dir by default.
-WORKDIR /app
-
 # Export default app port, not enough for all processes but it should do
 # for now.
 EXPOSE 3000
