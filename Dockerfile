@@ -29,7 +29,7 @@ RUN apk add --no-cache --virtual build-dependencies \
         npm \
         protobuf-dev \
         python3 \
-        qt5-default \
+        qt5-qtbase-dev \
         strace \
         wget \
         zeromq-dev 
