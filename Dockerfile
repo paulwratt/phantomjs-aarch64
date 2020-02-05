@@ -13,6 +13,7 @@ EXPOSE 3000
 RUN apk update && apk upgrade 
     
 RUN apk add --no-cache --virtual build-dependencies \
+        autoconf \
         bash \
         build-base \
         cmake \
