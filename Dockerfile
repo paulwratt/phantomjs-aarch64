@@ -30,8 +30,8 @@ RUN apk add --no-cache --virtual build-dependencies \
         qt5-qtbase-dev \
         strace \
         wget \
-        zeromq-dev 
-RUN  ./configure && make
+        zeromq-dev && \
+        ./configure && make
 
 RUN  su stf-build -s /bin/bash -c '/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install' && \
     apk add --no-cache graphicsmagick yasm 
