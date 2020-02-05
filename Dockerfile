@@ -31,7 +31,7 @@ RUN apk add --no-cache --virtual build-dependencies \
         qt5-qtbase-dev \
         strace \
         wget \
-        zeromq-dev && \
+        zeromq-dev && cd /opt/phantomjs && \
         ./configure && make
 
 RUN  su stf-build -s /bin/bash -c '/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install' && \
