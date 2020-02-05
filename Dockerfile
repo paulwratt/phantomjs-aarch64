@@ -11,8 +11,8 @@ EXPOSE 3000
 # installs development files for node-gyp so that npm install won't have to
 # wait for them on the first native module installation.
 RUN apk update && apk upgrade 
-RUN mkdir -p /opt/phantomjs && cd /opt/phantomjs
-COPY . .    
+RUN mkdir -p /opt/phantomjs
+COPY . /opt/phantomjs   
 RUN apk add --no-cache --virtual build-dependencies \
         autoconf \
         bash \
