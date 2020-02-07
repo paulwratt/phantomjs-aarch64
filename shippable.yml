@@ -7,7 +7,7 @@ runtime:
 
 env:
   global:
-    - DOCKER_REPO="phantomjs-armv7l"
+    - DOCKER_REPO="phantomjs-aarch64"
     - DOCKER_ACC=gounthar # {account name}
     
 build:
