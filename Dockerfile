@@ -45,6 +45,7 @@ RUN git config --global user.name "Bruno Verachten" && \
         cd ~ && git clone git://git.alpinelinux.org/aports && pwd && \
         abuild-keygen -a -i -n && \
         cd ./aports/community/qt5-qtwebkit && abuild checksum && \
+        abuild -r && \
         cd /opt/phantomjs && ./configure && make
 
 RUN  su stf-build -s /bin/bash -c '/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install' && \
