@@ -42,7 +42,7 @@ USER poddingue
 
 RUN git config --global user.name "Bruno Verachten" && \
         git config --global user.email "gounthar@users.noreply.github.com" && \
-        cd && git clone git://git.alpinelinux.org/aports && \
+        cd ~ && git clone git://git.alpinelinux.org/aports && pwd && \
         abuild-keygen -a -i -n && \
         cd ./aports/community/qt5-qtwebkit && abuild checksum && \
         cd /opt/phantomjs && ./configure && make
