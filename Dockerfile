@@ -35,13 +35,17 @@ RUN apk add --no-cache --virtual build-dependencies \
         zeromq-dev && cd /opt/phantomjs && \
         adduser -S -s /usr/sbin/nologin -D poddingue && \
         addgroup poddingue abuild && \
-        git config --global user.name "Bruno Verachten" && \
+        mkdir -p /var/cache/distfiles && chmod a+w /var/cache/distfiles
+        
+# Switch over to the build user.
+USER poddingue
+
+RUN git config --global user.name "Bruno Verachten" && \
         git config --global user.email "gounthar@users.noreply.github.com" && \
-        git clone git://git.alpinelinux.org/aports && \
-        mkdir -p /var/cache/distfiles && chmod a+w /var/cache/distfiles && \
+        cd && git clone git://git.alpinelinux.org/aports && \
         abuild-keygen -a -i -n && \
         cd ./aports/community/qt5-qtwebkit && abuild checksum && \
-        ./configure && make
+        cd /opt/phantomjs && ./configure && make
 
 RUN  su stf-build -s /bin/bash -c '/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install' && \
     apk add --no-cache graphicsmagick yasm 
@@ -53,8 +57,7 @@ COPY . /tmp/build/
 RUN mkdir -p /app && \
     chown -R stf-build:stf-build /tmp/build /app
 
-# Switch over to the build user.
-USER stf-build
+
 
 # Run the build.
 RUN set -x && \
