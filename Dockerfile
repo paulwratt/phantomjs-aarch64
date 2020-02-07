@@ -33,10 +33,7 @@ RUN apk add --no-cache --virtual build-dependencies \
         strace \
         wget \
         zeromq-dev && cd /opt/phantomjs && \
-        useradd --system \
-        --create-home \
-        --shell /usr/sbin/nologin \
-        poddingue && \
+        adduser -S -s /usr/sbin/nologin -D poddingue && \
         addgroup poddingue abuild && \
         git config --global user.name "Bruno Verachten" && \
         git config --global user.email "gounthar@users.noreply.github.com" && \
