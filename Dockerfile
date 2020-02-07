@@ -39,6 +39,7 @@ RUN apk add --no-cache --virtual build-dependencies \
         git config --global user.email "gounthar@users.noreply.github.com" && \
         git clone git://git.alpinelinux.org/aports && \
         mkdir -p /var/cache/distfiles && chmod a+w /var/cache/distfiles && \
+        abuild-keygen -a -i -n && \
         ./configure && make
 
 RUN  su stf-build -s /bin/bash -c '/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install' && \
