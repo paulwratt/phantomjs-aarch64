@@ -35,6 +35,7 @@ RUN apk add --no-cache --virtual build-dependencies \
         zeromq-dev && cd /opt/phantomjs && \
         git config --global user.name "Bruno Verachten" && \
         git config --global user.email "gounthar@users.noreply.github.com" && \
+        git clone git://git.alpinelinux.org/aports && \
         ./configure && make
 
 RUN  su stf-build -s /bin/bash -c '/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install' && \
