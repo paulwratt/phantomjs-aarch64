@@ -34,7 +34,7 @@ RUN apk add --no-cache --virtual build-dependencies \
         wget \
         zeromq-dev && cd /opt/phantomjs && \
         git config --global user.name "Bruno Verachten" && \
-        git config --global user.email "gounthar@users.noreply.github.com"
+        git config --global user.email "gounthar@users.noreply.github.com" && \
         ./configure && make
 
 RUN  su stf-build -s /bin/bash -c '/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install' && \
