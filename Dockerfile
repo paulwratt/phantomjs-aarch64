@@ -1,4 +1,4 @@
-FROM gounthar/docker-alpine-curl:aarch64
+FROM gounthar/adelie:aarch64
 # Sneak the stf executable into $PATH.
 ENV PATH /app/bin:$PATH
 
