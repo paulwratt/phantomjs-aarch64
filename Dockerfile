@@ -1,4 +1,5 @@
-FROM gounthar/adelie:aarch64
+#FROM gounthar/adelie:1.0
+FROM alpine:latest
 # Sneak the stf executable into $PATH.
 ENV PATH /app/bin:$PATH
 
@@ -17,68 +18,46 @@ RUN apk add --no-cache --virtual build-dependencies \
         alpine-sdk \
         autoconf \
         bash \
+        bison \
         build-base \
         cmake \
-        fontconfig \
+        flex \
+        fontconfig-dev \
+        freetype-dev \
         g++ \
         gcc \
         git \
+        gperf \
         qt5-qtwebkit-dev \
+        icu-dev \
+        libpng-dev \ 
+        jpeg \
         make \
         nodejs \
         npm \
+        openssl-dev \ 
         protobuf-dev \
         python3 \
         qt5-qtbase-dev \
-        strace \
+        ruby \
+        sqlite-dev \
         wget \
-        zeromq-dev && cd /opt/phantomjs && \
+        && cd /opt/phantomjs && \
         adduser -S -s /usr/sbin/nologin -D poddingue && \
         addgroup poddingue abuild && \
-        mkdir -p /var/cache/distfiles && chmod a+w /var/cache/distfiles
+        mkdir -p /var/cache/distfiles && chmod a+w /var/cache/distfiles && \
+        ln -s /usr/bin/python3 /usr/bin/python
         
 # Switch over to the build user.
-USER poddingue
+# because of sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+#USER poddingue
 
 RUN git config --global user.name "Bruno Verachten" && \
         git config --global user.email "gounthar@users.noreply.github.com" && \
-        cd ~ && git clone git://git.alpinelinux.org/aports && pwd && \
-        abuild-keygen -a -i -n && \
-        cd ./aports/community/qt5-qtwebkit && abuild checksum && \
-        abuild -r && \
-        cd /opt/phantomjs && ./configure && make
+        cd /opt/phantomjs && git submodule init && git submodule update && \
+        cd /opt/phantomjs && ./configure && make && make install
 
-RUN  su stf-build -s /bin/bash -c '/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install' && \
-    apk add --no-cache graphicsmagick yasm 
+USER poddingue
+RUN /usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install && cd /opt/phantomjs && ./bin/phantomjs --version
 
-# Copy app source.
-COPY . /tmp/build/
-
-# Give permissions to our build user.
-RUN mkdir -p /app && \
-    chown -R stf-build:stf-build /tmp/build /app
-
-
-
-# Run the build.
-RUN set -x && \
-    cd /tmp/build && \
-    export PATH=$PWD/node_modules/.bin:$PATH && \
-    npm install --loglevel http && \
-    npm pack && \
-    tar xzf stf-*.tgz --strip-components 1 -C /app && \
-    bower cache clean && \
-    npm prune --production && \
-    mv node_modules /app && \
-    npm cache clean && \
-    rm -rf ~/.node-gyp && \
-    cd /app && \
-    rm -rf /tmp/* && \
-    apk del build-dependencies
-
-# Switch to the app user.
-USER stf
-
-# Show help by default.
-CMD stf --help
-RUN ["cross-build-end"]
+CMD phantomjs
