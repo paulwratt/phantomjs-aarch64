@@ -60,4 +60,4 @@ RUN git config --global user.name "Bruno Verachten" && \
 USER poddingue
 RUN /usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js install && cd /opt/phantomjs && ./bin/phantomjs --version
 
-CMD phantomjs
+CMD phantomjs --help
